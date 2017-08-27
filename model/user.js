@@ -13,6 +13,7 @@ var userSchema = new Schema({
     password      :String
 });
 
+
 var User = mongoose.model('user',userSchema);
 module.exports = User;
 
@@ -26,6 +27,7 @@ module.exports.createUser = function (newUser,callback) {
     });
 };
 
+//local userID
 module.exports.getUserByUserName = function (username,callback) {
     var query = {username:username};
     User.findOne(query,callback);
@@ -42,6 +44,8 @@ module.exports.comparePassword = function (userPassword,hash,callback) {
     });
 }
 
+//fb useId
+//create new user using fb id
 
 
 
