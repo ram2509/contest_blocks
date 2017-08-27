@@ -1,12 +1,13 @@
 var express = require('express');
 //var morgan = require('morgan')
 var path = require('path');
+var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressHandlebars = require('express-handlebars');
 var flash = require('connect-flash');
 var session = require('express-session');
-var usersDB = require('./model/usersdb');
+//var usersDB = require('./model/usersdb');
 var port = process.env.PORT || 5000;
 
 var app = express();
@@ -36,12 +37,19 @@ app.use(session({
   saveUninitialized: false,
   resave: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
+//global variables
+app.use(function (req,res,next) {
+    res.locals.user = req.user || null;
+    next();
+})
 
 var routes = {
    index : require('./routes/index'),
-   users : require('./routes/users')
+   users : require('./routes/users'),
 }
 
 //catch 404 and forward to error handler
